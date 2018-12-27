@@ -20,11 +20,24 @@
 		
 		for(var i = 0; i < n; i++){
 			su = (arr1[i]|arr2[i]).toString(2);
+			su = lpad(su,n,"0");
 			su = su.replace(/1/gi,"#");
-			su = su.replace(/0/gi," ");
+			su = su.replace(/0/gi,"_");
 			output.push(su);
 		}
 		return output;
+	}
+	
+	function lpad(s, padLength, padString){
+		
+		if(typeof s === 'number'){
+			s =s.toString();
+		}
+		
+		
+	    while(s.length < padLength)
+	        s = padString + s;
+	    return s;
 	}
 	
 	var n = 5;

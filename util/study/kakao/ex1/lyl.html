@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Q1. Secret Map </title>
+</head>
+<body>
+	<h1> 네오의 지도 만들어 주기 </h1>
+	 정수 배열의 길이 입력 <input type="text" id="len" size="5"> ( 1 <= n <= 16) <br>
+	<input type="button" value="지도 만들기"  onclick="makeMap()">
+	<div id="out" >
+	
+	</div>
+	<div id="output" >
+	
+	</div>
+</body>
+<script>
+	function makeMap()
+	{	
+		var MIN = 1;
+		var MAX = 16;
+		
+		var len = document.getElementById('len').value;
+		if(len != null && MIN <= len && len <= MAX)
+		{
+			var arr1 = new Array(); 
+			var arr2 = new Array();
+			var result = new Array();
+			
+			for(var i = 0 ; i < len ; ++i)
+			{
+				arr1.push(getRandomNum(len));
+				arr2.push(getRandomNum(len));
+				result.push( arr1[i] | arr2[i] ) ;	
+			}
+			
+			document.getElementById('out').innerHTML = 
+				"<h2>배열 1 : " + arr1 + " </h2> <h2> 배열 2 : " + arr2 + "</h2> <h2> 비트연산 결과  : " +  result + "</h2>";
+			var str = "[";
+			for(var i in result )
+			{
+				if(result[i] != 0)
+				{
+					var quotient = parseInt(result[i]/2);
+					var remainder = [];
+					remainder.unshift(result[i]%2);
+					
+					while(quotient != 1 && quotient != 0)
+					{
+						remainder.unshift(quotient%2);
+						quotient = parseInt(quotient/2);
+					}
+					remainder.unshift(quotient);
+					
+					var diff = len - remainder.length;
+					for(var k = 0 ; k < diff ; ++k )
+					{
+						remainder.unshift(0);
+					}
+					console.log(remainder);
+					console.log("========================");
+					
+					for(var k = 0; k < remainder.length ; ++k)
+					{
+						console.log(k + " : " + remainder[k]);
+						if(remainder[k] == 1)
+						{
+							str += "#";
+						}
+						else
+						{
+							str += "_";
+						}
+					}
+					str += ", ";
+				}
+				else
+				{
+					for(var k = 0; k < len ; ++k)
+					{
+						str += "_";
+					}
+					str += ", ";
+				}
+			}
+			str += "]";
+			document.getElementById('output').innerHTML = str;
+		}
+		else
+		{
+			alert("Invalid Value. Try again.")
+		}
+	}
+	
+	function getRandomNum(length)
+	{
+		var range = Math.pow(2, length) -1;
+		var result = Math.floor(Math.random() * range);
+		return result;
+	}
+	
+</script>
+</html>
