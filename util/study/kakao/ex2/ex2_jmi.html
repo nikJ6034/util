@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="content"></div>
+</body>
+
+<script>
+	function devideString(dartPoint){
+		var points = [];
+		var reg = /(\d+\D+)(\S*)/;
+		
+		while(reg.test(dartPoint)){
+			var point = dartPoint.replace(reg,'$1');
+			dartPoint = dartPoint.replace(point,'');
+			points.push(point);
+		}
+		
+		return points;
+	}
+	
+	function calculator(point,kind){
+		var score = 0;
+		if(kind == 'S'){
+			score = Math.pow(point, 1);
+		}else if(kind == 'D'){
+			score = Math.pow(point, 2);
+		}else if(kind == 'T'){
+			score = Math.pow(point, 3);
+		}
+		
+		return score;
+	}
+	
+	function optionCal(score,option, index){
+		var optionValue = null;
+		if(option == '*'){
+			optionValue = 2;
+			score[index] = score[index]*optionValue; //자신의 옵션 값을 계산한다.
+			if(index-1 >= 0){
+				score[index-1] = score[index-1]*optionValue; //이전값과 옵션을 계산한다.
+			}
+		}else if(option == '#'){
+			optionValue = -1;
+			score[index] = score[index]*optionValue;
+		}
+	}
+	
+	function dart(dartPoint){
+		var pointString = devideString(dartPoint);
+		var score = [];
+		var sum = 0;
+		
+		pointString.forEach(function(p, index){
+			var point = p.replace(/(\d+)(\S+)/,"$1");
+			var kind = p.replace(point,"").charAt(0);
+			var option = p.replace(point,"").charAt(1);
+			score.push(calculator(point,kind));
+			optionCal(score,option,index);
+		});
+
+		score.forEach(function(score, index){
+			sum += score;
+		});
+		return sum;
+	}
+	
+	var input = ['1S2D*3T','1D2S#10S','1D2S0T','1S*2T*3S','1D#2S*3S','1T2D3D#','1D2S3T*'];
+	var content = document.getElementById('content');
+	var html = "";
+	input.forEach(function(input){
+		html +="입력 :"+input+" || 출력 : "+dart(input)+"<br/>";
+	});
+	
+	content.innerHTML = html;
+	
+</script>
+</html>
