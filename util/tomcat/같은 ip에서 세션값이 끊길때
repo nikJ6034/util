@@ -1,0 +1,3 @@
+세션 아이디가 중복되어 끊길 때 사용.
+<Context path="" reloadable="false" privileged="true" docBase="D:/Web/WebContent"
+               sessionCookieName="test_JSESSIONID" workDir="" crossContext="true" />
