@@ -1,0 +1,8 @@
+User-agent: *
+User-agent: Adsbot-Google
+Disallow: /atch/
+Disallow: /admin/
+Disallow: /dash/
+Disallow: /call/
+Disallow: /licen/
+Disallow: /manufr/
